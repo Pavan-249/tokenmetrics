@@ -39,3 +39,15 @@
 2025-12-19 12:56:10,913 | INFO | Starting ingestion for snapshot_time=2025-12-19T20:00:00+00:00
 2025-12-19 12:56:11,295 | INFO | Fetched 223 funding rate records
 2025-12-19 12:56:11,317 | INFO | Ingestion complete | snapshot=2025-12-19T20:00:00+00:00 | inserted=0
+2025-12-19 13:16:58,427 | INFO | Starting ingestion for snapshot_time=2025-12-19T21:00:00+00:00
+2025-12-19 13:16:58,845 | INFO | Fetched 223 funding rate records
+2025-12-19 13:16:58,888 | INFO | Ingestion complete | snapshot=2025-12-19T21:00:00+00:00 | inserted=223
+2025-12-19 13:17:45,058 | INFO | Starting ingestion for snapshot_time=2025-12-19T21:00:00+00:00
+2025-12-19 13:17:45,487 | INFO | Fetched 223 funding rate records
+2025-12-19 13:17:45,525 | INFO | Ingestion complete | snapshot=2025-12-19T21:00:00+00:00 | inserted=0
+2025-12-19 13:18:38,285 | INFO | Starting ingestion for snapshot_time=2025-12-19T21:00:00+00:00
+2025-12-19 13:18:38,691 | INFO | Fetched 223 funding rate records
+2025-12-19 13:18:38,743 | INFO | Ingestion complete | snapshot=2025-12-19T21:00:00+00:00 | inserted=0
+2025-12-19 13:22:57,408 | INFO | Starting ingestion for snapshot_time=2025-12-19T21:00:00+00:00
+2025-12-19 13:22:58,003 | INFO | Fetched 223 funding rate records
+2025-12-19 13:22:58,045 | INFO | Ingestion complete | snapshot=2025-12-19T21:00:00+00:00 | inserted=0

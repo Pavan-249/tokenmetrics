@@ -69,11 +69,28 @@ def main():
         columns=["timestamp", "symbol", "rate"]
     )
 
-    inserted = write_to_db(df)
-    logging.info(
+    try:
+        inserted = write_to_db(df)
+        errors = 0
+        logging.info(
         f"Ingestion complete | snapshot={snapshot_time.isoformat()} | "
         f"inserted={inserted}"
     )
+        
+    except Exception as e:
+        logging.error(f"Database write failed: {e}")
+        inserted = 0
+        errors = 1
+
+
+    
+    print(
+    f"snapshot_time={snapshot_time.isoformat()} | "
+    f"records_inserted={inserted} | "
+    f"errors={errors}"
+)
+
+    print('Ingestion complete')
 
 if __name__ == "__main__":
     main()
