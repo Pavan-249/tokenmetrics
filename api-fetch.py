@@ -4,7 +4,6 @@ import logging
 import pandas as pd
 from db_write import write_to_db
 
-
 logging.basicConfig(
     filename="funding_ingestion.log",
     level=logging.INFO,
@@ -12,7 +11,7 @@ logging.basicConfig(
 )
 
 API_URL = "https://api.hyperliquid.xyz/info"
-REQUEST_TIMEOUT = 10
+REQUEST_TIMEOUT = 1
 
 
 def get_snapshot_time():
@@ -28,7 +27,6 @@ def fetch_funding_rates(snapshot_time):
         response.raise_for_status()
 
         data = response.json()
-
         symbols = data[0]["universe"]
         contexts = data[1]
 
@@ -44,6 +42,10 @@ def fetch_funding_rates(snapshot_time):
 
         logging.info(f"Fetched {len(records)} funding rate records")
         return records
+
+    except requests.exceptions.Timeout:
+        logging.error("API request timed out")
+        return []
 
     except requests.exceptions.RequestException as e:
         logging.error(f"API request failed: {e}")
@@ -73,24 +75,22 @@ def main():
         inserted = write_to_db(df)
         errors = 0
         logging.info(
-        f"Ingestion complete | snapshot={snapshot_time.isoformat()} | "
-        f"inserted={inserted}"
-    )
-        
+            f"Ingestion complete | snapshot={snapshot_time.isoformat()} | "
+            f"inserted={inserted}"
+        )
     except Exception as e:
         logging.error(f"Database write failed: {e}")
         inserted = 0
         errors = 1
 
-
-    
     print(
-    f"snapshot_time={snapshot_time.isoformat()} | "
-    f"records_inserted={inserted} | "
-    f"errors={errors}"
-)
+        f"snapshot_time={snapshot_time.isoformat()} | "
+        f"records_inserted={inserted} | "
+        f"errors={errors}"
+    )
 
-    print('Ingestion complete')
+    print("Ingestion complete")
+
 
 if __name__ == "__main__":
     main()
