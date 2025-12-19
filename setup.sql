@@ -12,9 +12,9 @@ ON funding_rates (symbol, timestamp DESC);
 SELECT * FROM funding_rates;
 
 SELECT COUNT(*) AS total_keys FROM funding_rates;
-
 SELECT COUNT(*) AS distinct_keys
 FROM (
   SELECT DISTINCT timestamp, symbol
   FROM funding_rates
 ) t;
+

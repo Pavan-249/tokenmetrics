@@ -1,0 +1,6 @@
+What is left?
+1) Docker containers
+2) Cron Job
+3) Alerts - Success/ failure
+4) Readme file (readme.md)
+

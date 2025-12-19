@@ -34,3 +34,6 @@ def write_to_db(df):
 
     finally:
         conn.close()
+
+#Include docker? 
+#It is optional, also scheduling?
