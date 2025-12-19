@@ -27,6 +27,10 @@ def write_to_db(df):
 
         conn.commit()
         return inserted
+    ##Added the rollback logic to rollback transaction in case of failure
+    except Exception:
+        conn.rollback()
+        raise
 
     finally:
         conn.close()
