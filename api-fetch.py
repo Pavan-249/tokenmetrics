@@ -69,9 +69,11 @@ def main():
         columns=["timestamp", "symbol", "rate"]
     )
 
-    write_to_db(df)
-    ##Need to add logging here
-
+    inserted = write_to_db(df)
+    logging.info(
+        f"Ingestion complete | snapshot={snapshot_time.isoformat()} | "
+        f"inserted={inserted}"
+    )
 
 if __name__ == "__main__":
     main()

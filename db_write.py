@@ -25,3 +25,4 @@ def write_to_db(df):
     conn.close()
 
     print(f"Inserted {inserted} records")
+    return inserted
