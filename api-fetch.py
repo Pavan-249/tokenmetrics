@@ -11,7 +11,7 @@ logging.basicConfig(
 )
 
 API_URL = "https://api.hyperliquid.xyz/info"
-REQUEST_TIMEOUT = 1
+REQUEST_TIMEOUT = 10
 
 
 def get_snapshot_time():
@@ -24,6 +24,11 @@ def fetch_funding_rates(snapshot_time):
     try:
         payload = {"type": "metaAndAssetCtxs"}
         response = requests.post(API_URL, json=payload, timeout=REQUEST_TIMEOUT)
+
+        if response.status_code >= 500:
+            logging.error(f"Server error from API: {response.status_code}")
+            return []
+
         response.raise_for_status()
 
         data = response.json()
