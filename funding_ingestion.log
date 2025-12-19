@@ -34,3 +34,5 @@
 2025-12-18 17:09:16,065 | INFO | Fetched funding rates for 223 symbols
 2025-12-18 17:10:51,784 | INFO | Fetched funding rates for 223 symbols
 2025-12-18 17:14:16,965 | INFO | Fetched funding rates for 223 symbols
+2025-12-19 12:45:29,719 | INFO | Starting ingestion for snapshot_time=2025-12-19T20:00:00+00:00
+2025-12-19 12:45:30,481 | INFO | Fetched 223 funding rate records

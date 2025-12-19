@@ -1,9 +1,9 @@
 import requests
 from datetime import datetime, timezone
-import time
 import logging
-from tokenmetrics.db_write import write_to_db
 import pandas as pd
+from db_write import write_to_db
+
 
 logging.basicConfig(
     filename="funding_ingestion.log",
@@ -11,47 +11,67 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s"
 )
 
-def fetch_funding_rates():
-    """Fetch current funding rates from Hyperliquid API.
-    
-    Returns:
-        List of tuples: (timestamp, symbol, rate)
-    """
+API_URL = "https://api.hyperliquid.xyz/info"
+REQUEST_TIMEOUT = 10
+
+
+def get_snapshot_time():
+    return datetime.now(timezone.utc).replace(
+        minute=0, second=0, microsecond=0
+    )
+
+
+def fetch_funding_rates(snapshot_time):
     try:
         payload = {"type": "metaAndAssetCtxs"}
-        response = requests.post('https://api.hyperliquid.xyz/info', json=payload, timeout=10)
+        response = requests.post(API_URL, json=payload, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
-        
+
         data = response.json()
-        # data[0]['universe'] contains symbol metadata
-        # data[1] contains funding rates (same order as symbols)
-        symbols = data[0]['universe']
+
+        symbols = data[0]["universe"]
         contexts = data[1]
-        
-        snapshot_time = datetime.now(timezone.utc).replace(
-        minute=0, second=0, microsecond=0
-        )
-        funding_data = []
-        
+
+        records = []
+
         for i, symbol_info in enumerate(symbols):
-            symbol = symbol_info['name']
-            rate = float(contexts[i]['funding'])
-            funding_data.append((snapshot_time, symbol, rate))
-        
-        logging.info(f"Fetched funding rates for {len(funding_data)} symbols")
-        return funding_data
-        
+            try:
+                symbol = symbol_info["name"]
+                rate = float(contexts[i]["funding"])
+                records.append((snapshot_time, symbol, rate))
+            except (KeyError, IndexError, ValueError):
+                logging.warning(f"Skipping malformed record at index {i}")
+
+        logging.info(f"Fetched {len(records)} funding rate records")
+        return records
+
     except requests.exceptions.RequestException as e:
-        
         logging.error(f"API request failed: {e}")
         return []
-    except (KeyError, IndexError, ValueError) as e:
-        print(f"Failed to parse API response: {e}")
-        logging.error(f"Failed to parse API response: {e}")
-        return []
 
-funding_data = fetch_funding_rates()
 
-df = pd.DataFrame(funding_data, columns=['timestamp', 'symbol', 'rate'])
-write_to_db(df)
-print(df.head())
+def main():
+    snapshot_time = get_snapshot_time()
+    logging.info(f"Starting ingestion for snapshot_time={snapshot_time.isoformat()}")
+
+    funding_data = fetch_funding_rates(snapshot_time)
+
+    if not funding_data:
+        logging.error("No data fetched from API")
+        print(
+            f"snapshot_time={snapshot_time.isoformat()} | "
+            f"records_inserted=0 | errors=1"
+        )
+        return
+
+    df = pd.DataFrame(
+        funding_data,
+        columns=["timestamp", "symbol", "rate"]
+    )
+
+    write_to_db(df)
+    ##Need to add logging here
+
+
+if __name__ == "__main__":
+    main()
