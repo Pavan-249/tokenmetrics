@@ -54,3 +54,9 @@
 2025-12-19 13:40:47,061 | INFO | Starting ingestion for snapshot_time=2025-12-19T21:00:00+00:00
 2025-12-19 13:40:47,067 | ERROR | API request failed: HTTPSConnectionPool(host='api.hyperliquid.xyz', port=443): Max retries exceeded with url: /info (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x1350a56a0>: Failed to resolve 'api.hyperliquid.xyz' ([Errno 8] nodename nor servname provided, or not known)"))
 2025-12-19 13:40:47,067 | ERROR | No data fetched from API
+2025-12-19 13:59:29,361 | INFO | Starting ingestion for snapshot_time=2025-12-19T21:00:00+00:00
+2025-12-19 13:59:29,761 | INFO | Fetched 223 funding rate records
+2025-12-19 13:59:29,796 | INFO | Ingestion complete | snapshot=2025-12-19T21:00:00+00:00 | inserted=0
+2025-12-19 14:00:16,779 | INFO | Starting ingestion for snapshot_time=2025-12-19T22:00:00+00:00
+2025-12-19 14:00:16,981 | INFO | Fetched 223 funding rate records
+2025-12-19 14:00:17,026 | INFO | Ingestion complete | snapshot=2025-12-19T22:00:00+00:00 | inserted=223

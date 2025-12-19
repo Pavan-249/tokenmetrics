@@ -32,6 +32,16 @@ def fetch_funding_rates(snapshot_time):
         response.raise_for_status()
 
         data = response.json()
+
+        if (
+            not isinstance(data, list)
+            or len(data) < 2
+            or "universe" not in data[0]
+            or not isinstance(data[1], list)
+        ):
+            logging.error("Malformed API response structure")
+            return []
+
         symbols = data[0]["universe"]
         contexts = data[1]
 
