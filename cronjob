@@ -1,0 +1,2 @@
+0 * * * * python /app/api-fetch.py >> /app/funding_ingestion.log 2>&1
+
