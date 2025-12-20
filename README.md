@@ -48,8 +48,9 @@ This makes retries and restarts safe.
 ## Scheduling behavior
 
 The ingestion container runs as a long lived service.  
-Cron is started when the container starts and runs the ingestion job every hour.
+Cron is started when the container starts and handles scheduling internally.
 
+The job is executed every hour while the container is running.  
 If the container is stopped, scheduled runs during that downtime are skipped.  
 When the container restarts, ingestion resumes from the current hour.
 
