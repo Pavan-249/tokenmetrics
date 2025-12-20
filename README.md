@@ -90,3 +90,13 @@ Cron inside the container was used here to keep the setup minimal while still de
 
 Backfilling missed time windows could also be added if required, but was intentionally left out to keep the pipeline focused.
 
+## Monitoring and alerting
+
+Alerting is not implemented in this project.  
+In a production setting, alerts would be configured externally based on logs and metrics.
+
+Examples include
+- repeated ingestion failures across multiple runs
+- no new data ingested within an expected time window
+- database connectivity failures
+- elevated API error rates
