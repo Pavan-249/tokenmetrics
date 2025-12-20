@@ -5,10 +5,10 @@ import os
 def write_to_db(df):
     conn = psycopg.connect(
         host=os.getenv("DB_HOST", "localhost"),
-        port=5432,
+        port=int(os.getenv("DB_PORT", "5432")),
         dbname=os.getenv("DB_NAME", "funding_db"),
-        user=os.getenv("DB_USER", "pavankumar_s"),
-        password=os.getenv("DB_PASSWORD")
+        user=os.getenv("DB_USER", "postgres"),
+        password=os.getenv("DB_PASSWORD", "postgres")
     )
 
     try:
@@ -27,13 +27,10 @@ def write_to_db(df):
 
         conn.commit()
         return inserted
-    ##Added the rollback logic to rollback transaction in case of failure
+
     except Exception:
         conn.rollback()
         raise
 
     finally:
         conn.close()
-
-#Include docker? 
-#It is optional, also scheduling?
