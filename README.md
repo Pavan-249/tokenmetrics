@@ -100,3 +100,18 @@ Examples include
 - no new data ingested within an expected time window
 - database connectivity failures
 - elevated API error rates
+
+
+##AI Usage
+I used AI as a review and refinement tool, not as a replacement for design or implementation decisions.
+To be precise, AI helped with:
+
+1) Validating edge cases around network failures, HTTP errors, and incorrect API responses
+
+2) Sanity-checking PostgreSQL behaviors.
+
+3) Refining error-handling structure
+
+4) Improving clarity of logging and understanding good practices while implementing logging.
+
+5) Reviewing code structure to keep the solution simple and readable.
