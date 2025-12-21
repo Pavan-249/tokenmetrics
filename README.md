@@ -102,7 +102,7 @@ Examples include
 - elevated API error rates
 
 
-##AI Usage
+## AI Usage
 I used AI as a review and refinement tool, not as a replacement for design or implementation decisions.
 To be precise, AI helped with:
 
